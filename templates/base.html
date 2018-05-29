@@ -1,60 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>{%block title%}{% endblock title %} - Ninja Tech Forum</title>
+  <title>{%block title%}{% endblock title %} - Ninja Tech Forum</title>
 
-    <!-- Bootstrap -->
-    <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Ninja Tech Forum</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">About</a></li>
-            <li><a href="#">Login</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
-
-    {% if cookies %}
-      <!-- Load my cookies code here -->
-    {% else %}
-      <div class="alert alert-danger" role="alert">
-        Hey, we use cookies. Do you accept them? :)
-        <form action="/set-cookie" method="post">
-          <button class="btn btn-success btn-xs">I accept</button>
-        </form>
-      </div>
-    {% endif %}
-
-    <div class="container">
-      {% block content %}{% endblock content %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Ninja Tech Forum</a>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/assets/bootstrap/js/bootstrap.js"></script>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">About</a></li>
+
+        {% if logout_url %}
+          <li><a href="#">{{ user.email() }}</a></li>
+          <li><a href="/topic/add">Add new topic</a></li>
+          <li><a href="{{ logout_url }}">Logout</a></li>
+        {% elif login_url %}
+          <li><a href="{{ login_url }}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+{% if cookies %}
+<!-- Load my cookies code here -->
+{% else %}
+<div class="alert alert-danger" role="alert">
+  Hey, we use cookies. Do you accept them? :)
+  <form action="/set-cookie" method="post">
+    <button class="btn btn-success btn-xs">I accept</button>
+  </form>
+</div>
+{% endif %}
+
+<div class="container">
+  {% block content %}{% endblock content %}
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/assets/bootstrap/js/bootstrap.js"></script>
 </body>
 </html>
