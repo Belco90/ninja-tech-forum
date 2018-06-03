@@ -4,7 +4,7 @@ from google.appengine.api import users
 from models.topic import Topic
 
 
-class TopicAdd(BaseHandler):
+class TopicAddHandler(BaseHandler):
     def get(self):
         return self.render_template("topic_add.html")
 
@@ -29,7 +29,7 @@ class TopicAdd(BaseHandler):
         return self.redirect_to("topic-details", topic_id=new_topic.key.id())
 
 
-class TopicDetails(BaseHandler):
+class TopicDetailsHandler(BaseHandler):
     def get(self, topic_id):
         topic = Topic.get_by_id(int(topic_id))
 
