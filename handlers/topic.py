@@ -28,7 +28,7 @@ class TopicAddHandler(BaseHandler):
         if not user:
             return self.write("Please login before you're allowed to post a topic.")
 
-        csrf_token = self.request.get("csrf_token")
+        csrf_token = self.request.get("csrf-token")
         mem_token = memcache.get(key=csrf_token)
 
         if not mem_token or mem_token != user.email():
