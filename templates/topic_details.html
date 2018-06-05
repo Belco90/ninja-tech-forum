@@ -11,11 +11,47 @@
       </div>
 
       <div class="panel-body">
-        <p><strong>Author:</strong>&nbsp;{{ topic.author_email }}</p>
+        <p>
+          <strong>Author:</strong>&nbsp;{{ topic.author_email }}
+          ({{topic.created.strftime("%d/%m/%Y at %H:%M")}})
+        </p>
 
         <p>{{ topic.content }}</p>
       </div>
     </div>
+  </div>
+</div>
+
+{% for comment in comments %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ comment.author_email }} <em>({{ comment.created.strftime("%d/%m/%Y at %H:%M") }})</em>
+        </h3>
+      </div>
+
+      <div class="panel-body">
+        <p>{{ comment.content }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form action="/topic/{{ topic.key.id() }}/add-comment" method="post">
+      <input type="hidden" name="csrf-token" value="{{ csrf_token }}">
+
+      <div class="form-group">
+        <label>Add new comment</label>
+        <textarea name="comment-content" class="form-control" rows="3" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-success pull-right">Submit</button>
+    </form>
   </div>
 </div>
 {% endblock content %}

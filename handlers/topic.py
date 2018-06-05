@@ -3,6 +3,7 @@ import uuid
 from handlers.base import BaseHandler
 from google.appengine.api import memcache, users
 
+from models.comment import Comment
 from models.topic import Topic
 
 
@@ -43,7 +44,11 @@ class TopicAddHandler(BaseHandler):
         if not text:
             return self.write("Text field is required")
 
-        new_topic = Topic(title=title, content=text, author_email=user.email())
+        new_topic = Topic(
+            title=title,
+            content=text,
+            author_email=user.email(),
+        )
         new_topic.put()
 
         return self.redirect_to("topic-details", topic_id=new_topic.key.id())
@@ -52,9 +57,12 @@ class TopicAddHandler(BaseHandler):
 class TopicDetailsHandler(BaseHandler):
     def get(self, topic_id):
         topic = Topic.get_by_id(int(topic_id))
+        comments = Comment.query(Comment.deleted == False).filter(Comment.topic_id == int(topic_id)).order(
+            Comment.created).fetch()
 
         context = {
             "topic": topic,
+            "comments": comments,
         }
 
         return self.render_template("topic_details.html", params=context)

@@ -21,7 +21,7 @@
       <tbody>
         {% for topic in topics %}
           <tr>
-            <td><a href="/topic/details/{{ topic.key.id() }}">{{ topic.title }}</a></td>
+            <td><a href="/topic/{{ topic.key.id() }}/details">{{ topic.title }}</a></td>
             <td>{{ topic.author_email }}</td>
             <td>{{ topic.created.strftime('%d/%m/%Y at %H:%M') }}</td>
           </tr>
