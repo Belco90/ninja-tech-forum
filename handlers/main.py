@@ -1,5 +1,6 @@
 from handlers.base import BaseHandler
 from models.topic import Topic
+from utils.decorators import validate_csrf
 
 
 class MainHandler(BaseHandler):

@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import os
+import uuid
+
 import jinja2
 import webapp2
-from google.appengine.api import users
+from google.appengine.api import memcache, users
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "../templates")
@@ -21,7 +23,7 @@ class BaseHandler(webapp2.RequestHandler):
     def render(self, template, **kw):
         return self.write(self.render_str(template, **kw))
 
-    def render_template(self, view_filename, params=None):
+    def render_template(self, view_filename, params=None, generate_csrf_token=False):
         if not params:
             params = {}
 
@@ -31,12 +33,20 @@ class BaseHandler(webapp2.RequestHandler):
             params["cookies"] = True
 
         # google login
-        user = users.get_current_user()
-        if user:
-            params["user"] = user
+        logged_user = users.get_current_user()
+        if logged_user:
+            params["user"] = logged_user
             params["logout_url"] = users.create_logout_url('/')
+
+            # generate csrf token only if asked and user logged (we need their email)
+            if generate_csrf_token:
+                csrf_token = str(uuid.uuid4())
+                memcache.add(key=csrf_token, value=logged_user.email(), time=600)
+                params["csrf_token"] = csrf_token
+
         else:
             params["login_url"] = users.create_login_url('/')
+
 
         template = jinja_env.get_template(view_filename)
         return self.response.out.write(template.render(params))

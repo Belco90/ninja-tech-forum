@@ -5,36 +5,15 @@ from google.appengine.api import memcache, users
 
 from models.comment import Comment
 from models.topic import Topic
+from utils.decorators import validate_csrf
 
 
 class TopicAddHandler(BaseHandler):
     def get(self):
-        user = users.get_current_user()
+        return self.render_template("topic_add.html", generate_csrf_token=True)
 
-        if not user:
-            return self.write("Please login before you're allowed to post a topic.")
-
-        csrf_token = str(uuid.uuid4())
-        memcache.add(key=csrf_token, value=user.email(), time=600)
-
-        context = {
-            "csrf_token": csrf_token,
-        }
-
-        return self.render_template("topic_add.html", params=context)
-
+    @validate_csrf
     def post(self):
-        user = users.get_current_user()
-
-        if not user:
-            return self.write("Please login before you're allowed to post a topic.")
-
-        csrf_token = self.request.get("csrf-token")
-        mem_token = memcache.get(key=csrf_token)
-
-        if not mem_token or mem_token != user.email():
-            return self.write("CSRF Token is protecting this website :)")
-
         title = self.request.get("title")
         text = self.request.get("text")
 
@@ -44,10 +23,12 @@ class TopicAddHandler(BaseHandler):
         if not text:
             return self.write("Text field is required")
 
+        logged_user = users.get_current_user()
+
         new_topic = Topic(
             title=title,
             content=text,
-            author_email=user.email(),
+            author_email=logged_user.email(),
         )
         new_topic.put()
 
@@ -65,4 +46,4 @@ class TopicDetailsHandler(BaseHandler):
             "comments": comments,
         }
 
-        return self.render_template("topic_details.html", params=context)
+        return self.render_template("topic_details.html", params=context, generate_csrf_token=True)

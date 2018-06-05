@@ -3,9 +3,12 @@ from google.appengine.api import users
 
 from models.comment import Comment
 from models.topic import Topic
+from utils.decorators import validate_csrf
 
 
 class CommentAddHandler(BaseHandler):
+
+    @validate_csrf
     def post(self, topic_id):
         logged_user = users.get_current_user()
 
