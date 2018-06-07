@@ -22,12 +22,10 @@ class CommentAddHandler(BaseHandler):
 
         topic = Topic.get_by_id(int(topic_id))
 
-        new_comment = Comment(
+        Comment.create(
             content=comment_content,
-            author_email=logged_user.email(),
-            topic_id=topic.key.id(),
-            topic_title=topic.title,
+            user=logged_user,
+            topic=topic,
         )
-        new_comment.put()
 
         return self.redirect_to("topic-details", topic_id=topic.key.id())
