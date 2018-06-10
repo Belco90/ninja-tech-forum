@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Delete {{ topic.title }}{% endblock title %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="alert alert-info fade in" role="alert">
+      <h4>Are you sure you want to subscribe to the topic "{{ topic.title }}"?</h4>
+      <form method="post">
+        <div>
+          <a href="/topic/{{ topic.key.id() }}/details" class="btn btn-default">Cancel</a>
+
+          <input type="hidden" name="csrf-token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-success">Confirm</button>
+
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

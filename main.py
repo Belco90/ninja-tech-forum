@@ -3,7 +3,7 @@ import webapp2
 from handlers.comment import CommentAddHandler, CommentsFromUserHandler
 from handlers.cookie import CookieAlertHandler
 from handlers.main import MainHandler
-from handlers.topic import TopicAddHandler, TopicDeleteHandler, TopicDetailsHandler
+from handlers.topic import TopicAddHandler, TopicDeleteHandler, TopicDetailsHandler, TopicSubscribeHandler
 from workers.email_new_comment import EmailNewCommentWorker
 
 app = webapp2.WSGIApplication([
@@ -12,6 +12,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/topic/add', TopicAddHandler, name="topic-add"),
     webapp2.Route('/topic/<topic_id:\d+>/details', TopicDetailsHandler, name="topic-details"),
     webapp2.Route('/topic/<topic_id:\d+>/delete', TopicDeleteHandler, name="topic-delete"),
+    webapp2.Route('/topic/<topic_id:\d+>/subscribe', TopicSubscribeHandler, name="topic-subscribe"),
     webapp2.Route('/topic/<topic_id:\d+>/add-comment', CommentAddHandler, name="comment-add"),
     webapp2.Route('/my-comments', CommentsFromUserHandler, name="my-comments"),
     webapp2.Route('/task/email-new-comment', EmailNewCommentWorker, name='task-email-new-comment'),

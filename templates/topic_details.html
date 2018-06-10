@@ -9,9 +9,14 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           {{ topic.title }}
-          {% if can_delete %}
-            <a href="/topic/{{ topic.key.id() }}/delete" class="btn btn-danger btn-xs pull-right">Delete</a>
-          {% endif %}
+          <div class="pull-right">
+            {% if not is_subscribed %}
+              <a href="/topic/{{ topic.key.id() }}/subscribe" class="btn btn-info btn-xs">Subscribe</a>
+            {% endif %}
+            {% if can_delete %}
+              <a href="/topic/{{ topic.key.id() }}/delete" class="btn btn-danger btn-xs">Delete</a>
+            {% endif %}
+          </div>
         </h3>
       </div>
 

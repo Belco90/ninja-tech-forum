@@ -1,6 +1,8 @@
 from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 
+from models.topic_subscription import TopicSubscription
+
 
 class Comment(ndb.Model):
     content = ndb.TextProperty()
@@ -21,15 +23,23 @@ class Comment(ndb.Model):
         )
         new_comment.put()
 
-        # send notification to topic author
-        taskqueue.add(
-            url='/task/email-new-comment',
-            params={
-                'topic-author-email': topic.author_email,
-                'topic-title': topic.title,
-                'topic-id': topic.key.id(),
-            }
-        )
+        subscriptions = TopicSubscription.query(TopicSubscription.topic_id == topic.key.id()).fetch()
+
+        subscribers = [topic.author_email, ]
+        for subscription in subscriptions:
+            if subscription.user_email != user.email():
+                subscribers.append(subscription.user_email)
+
+        # send notification to topic author and subscribers
+        for email in subscribers:
+            taskqueue.add(
+                url='/task/email-new-comment',
+                params={
+                    'topic-author-email': email,
+                    'topic-title': topic.title,
+                    'topic-id': topic.key.id(),
+                }
+            )
 
         return new_comment
 
