@@ -25,12 +25,11 @@ class TopicAddHandler(BaseHandler):
 
         logged_user = users.get_current_user()
 
-        new_topic = Topic(
+        new_topic = Topic.create(
             title=title,
             content=text,
-            author_email=logged_user.email(),
+            user=logged_user,
         )
-        new_topic.put()
 
         return self.redirect_to("topic-details", topic_id=new_topic.key.id())
 

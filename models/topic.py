@@ -8,3 +8,14 @@ class Topic(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     updated = ndb.DateTimeProperty(auto_now=True)
     deleted = ndb.BooleanProperty(default=False)
+
+    @classmethod
+    def create(cls, title, content, user):
+        new_topic = Topic(
+            title=title,
+            content=content,
+            author_email=user.email(),
+        )
+        new_topic.put()
+
+        return new_topic
