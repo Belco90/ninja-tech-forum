@@ -77,9 +77,9 @@ class TopicDetailsHandler(BaseHandler):
 
         logged_user = users.get_current_user()
 
-        is_subscribed = topic.author_email == logged_user.email()
+        is_subscribed = logged_user and topic.author_email == logged_user.email()
 
-        if not is_subscribed:
+        if logged_user and not is_subscribed:
             # check if user asked to be subscribed
             is_subscribed = TopicSubscription.is_user_subscribed(logged_user, topic)
 
