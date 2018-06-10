@@ -19,3 +19,11 @@ class Topic(ndb.Model):
         new_topic.put()
 
         return new_topic
+
+    def delete(self):
+        self.deleted = True
+        self.put()
+
+
+
+        return self
