@@ -24,6 +24,4 @@ class Topic(ndb.Model):
         self.deleted = True
         self.put()
 
-
-
         return self

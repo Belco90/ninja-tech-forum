@@ -32,3 +32,13 @@ class Comment(ndb.Model):
         )
 
         return new_comment
+
+    def delete(self):
+        self.deleted = True
+        self.put()
+
+        return self
+
+    @classmethod
+    def filter_by_topic(cls, topic_id):
+        return cls.query(cls.deleted == False).filter(cls.topic_id == topic_id)

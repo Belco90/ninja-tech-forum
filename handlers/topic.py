@@ -61,14 +61,18 @@ class TopicDeleteHandler(BaseHandler):
 
         topic.delete()
 
+        comments = Comment.filter_by_topic(int(topic_id)).fetch()
+
+        for comment in comments:
+            comment.delete()
+
         return self.redirect_to("main-page")
 
 
 class TopicDetailsHandler(BaseHandler):
     def get(self, topic_id):
         topic = Topic.get_by_id(int(topic_id))
-        comments = Comment.query(Comment.deleted == False).filter(Comment.topic_id == int(topic_id)).order(
-            Comment.created).fetch()
+        comments = Comment.filter_by_topic(int(topic_id)).order(Comment.created).fetch()
 
         logged_user = users.get_current_user()
 
