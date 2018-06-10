@@ -34,6 +34,7 @@
         {% if logout_url %}
           <li><a href="#">{{ user.email() }}</a></li>
           <li><a href="/topic/add">Add new topic</a></li>
+          <li><a href="/my-comments">My comments</a></li>
           <li><a href="{{ logout_url }}">Logout</a></li>
         {% elif login_url %}
           <li><a href="{{ login_url }}">Login</a></li>

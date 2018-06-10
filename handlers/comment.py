@@ -6,6 +6,22 @@ from models.topic import Topic
 from utils.decorators import validate_csrf
 
 
+class CommentsFromUserHandler(BaseHandler):
+    def get(self):
+        logged_user = users.get_current_user()
+
+        if not logged_user:
+            return self.write("Please login before you're allowed to see your comments.")
+
+        comments = Comment.filter_by_user(logged_user.email()).fetch()
+
+        context = {
+            "comments": comments,
+        }
+
+        return self.render_template("comments.html", params=context)
+
+
 class CommentAddHandler(BaseHandler):
 
     @validate_csrf

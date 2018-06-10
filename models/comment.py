@@ -42,3 +42,7 @@ class Comment(ndb.Model):
     @classmethod
     def filter_by_topic(cls, topic_id):
         return cls.query(cls.deleted == False).filter(cls.topic_id == topic_id)
+
+    @classmethod
+    def filter_by_user(cls, user_email):
+        return cls.query(cls.deleted == False).filter(cls.author_email == user_email)
