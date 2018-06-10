@@ -11,7 +11,7 @@ class Topic(ndb.Model):
 
     @classmethod
     def create(cls, title, content, user):
-        new_topic = Topic(
+        new_topic = cls(
             title=title,
             content=content,
             author_email=user.email(),
