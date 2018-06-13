@@ -10,6 +10,10 @@ handlers:
   script: main.app
   login: admin
 
+- url: /cron.*
+  script: main.app
+  login: admin
+
 - url: .*
   script: main.app
 
