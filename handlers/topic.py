@@ -88,7 +88,6 @@ class TopicDetailsHandler(BaseHandler):
             "comments": comments,
             "can_delete": users.is_current_user_admin() or (logged_user and topic.author_email == logged_user.email()),
             "is_subscribed": is_subscribed,
-            "user": logged_user,
         }
 
         return self.render_template("topic_details.html", params=context, generate_csrf_token=True)
