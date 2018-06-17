@@ -4,7 +4,7 @@ import webapp2
 import webtest
 
 from google.appengine.ext import testbed
-from main import MainHandler
+from handlers.main import MainHandler
 
 
 class MainPageTests(unittest.TestCase):
@@ -34,5 +34,9 @@ class MainPageTests(unittest.TestCase):
         self.testbed.deactivate()
 
     def test_main_page_handler(self):
-        get = self.testapp.get('/')  # get main handler
-        self.assertEqual(get.status_int, 200)  # if GET request was ok, it should return 200 status code
+        response = self.testapp.get('/')  # get main handler
+        self.assertEqual(response.status_int, 200)  # if GET request was ok, it should return 200 status code
+        self.assertIn('Welcome to Ninja Tech Forum', response.body)
+
+
+
