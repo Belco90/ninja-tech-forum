@@ -16,6 +16,11 @@ indexes:
   - name: topic_id
   - name: created
 
+- kind: Comment
+  properties:
+  - name: deleted
+  - name: updated
+
 - kind: Topic
   properties:
   - name: deleted
