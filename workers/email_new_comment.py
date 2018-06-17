@@ -5,13 +5,12 @@ from handlers.base import BaseHandler
 
 class EmailNewCommentWorker(BaseHandler):
     def post(self):
-
         topic_author_email = self.request.get('topic-author-email')
         topic_title = self.request.get('topic-title')
         topic_id = self.request.get('topic-id')
 
         mail.send_mail(
-            sender="belco90@gmail.com",
+            sender="anything@ninja-tech-forum-wd2.appspotmail.com",
             to=topic_author_email,
             subject="New comment on a topic",
             body="""The topic {} received a new comment.

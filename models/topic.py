@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from google.appengine.ext import ndb
 
 
@@ -25,3 +27,10 @@ class Topic(ndb.Model):
         self.put()
 
         return self
+
+    @classmethod
+    def filter_by_recent_updated(cls):
+        topics = cls.query(cls.deleted == False)
+        topics = topics.filter(cls.updated > (datetime.now() - timedelta(hours=24)))
+
+        return topics
