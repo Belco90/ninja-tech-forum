@@ -39,6 +39,12 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           {{ comment.author_email }} <em>({{ comment.created.strftime("%d/%m/%Y at %H:%M") }})</em>
+
+          <div class="pull-right">
+            {% if user and comment.author_email == user.email() %}
+              <a href="/comment/{{ comment.key.id() }}/delete" class="btn btn-danger btn-xs">Delete</a>
+            {% endif %}
+          </div>
         </h3>
       </div>
 
