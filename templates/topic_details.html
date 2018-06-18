@@ -14,7 +14,7 @@
               <a href="/topic/{{ topic.key.id() }}/subscribe" class="btn btn-info btn-xs">Subscribe</a>
             {% endif %}
             {% if can_delete %}
-              <a href="/topic/{{ topic.key.id() }}/delete" class="btn btn-danger btn-xs">Delete</a>
+              <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-topic-modal">Delete</button>
             {% endif %}
           </div>
         </h3>
@@ -68,6 +68,28 @@
 
       <button type="submit" class="btn btn-success pull-right">Submit</button>
     </form>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="delete-topic-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete topic "{{ topic.title }}"</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete the topic "{{ topic.title }}"?</p>
+      </div>
+      <div class="modal-footer">
+        <form action="/topic/{{ topic.key.id() }}/delete" method="post">
+          <input type="hidden" name="csrf-token" value="{{ csrf_token }}">
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}
