@@ -2,3 +2,11 @@ cron:
 - description: Delete topics from database older than 30 days
   url: /cron/delete-topics
   schedule: every sunday 09:00
+
+- description: Delete comments from database older than 30 days
+  url: /cron/delete-comments
+  schedule: every sunday 09:00
+
+- description: Send daily email with topics updated in last 24h
+  url: /cron/send-daily-email
+  schedule: every day 08:00
