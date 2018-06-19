@@ -1,13 +1,26 @@
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 $(document).ready(function () {
   var $addTopicButton = $('#add-topic-button');
   var $addTopicTitle = $('#add-topic-title');
   var $addTopicText = $('#add-topic-text');
   var $addTopicSum = $('#add-topic-sum');
+  var $topicSumLabel = $('#topic-sum-label');
+
+  var firstRandom = getRandomInt(1, 10);
+  var secondRandom = getRandomInt(1, 10);
+
+  $topicSumLabel.text('What is the sum of ' + firstRandom + ' and ' + secondRandom + '?');
 
   $addTopicButton.on('click', function (event) {
     var error = false;
+    var userSum = parseInt($addTopicSum.val());
 
-    if ($addTopicSum.val() !== '10') {
+    if (userSum !== (firstRandom + secondRandom)) {
       error = true;
       event.preventDefault();
       $addTopicSum.closest('.form-group').addClass('has-error has-feedback');
