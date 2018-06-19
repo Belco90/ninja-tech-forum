@@ -18,7 +18,14 @@
 
       <div class="form-group">
         <label>Text</label>
-        <textarea name="text" class="form-control" rows="6" required></textarea>
+        <textarea name="text" class="form-control" rows="6" required id="add-topic-text"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>What is the sum of 2 and 8?</label>
+        <input type="text" class="form-control" required id="add-topic-sum">
+        <span class="help-block hidden">Wrong sum!</span>
+        <span class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
       </div>
 
       <button type="submit" class="btn btn-success" id="add-topic-button">Submit</button>
