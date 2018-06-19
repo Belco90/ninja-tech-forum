@@ -48,11 +48,13 @@
 {% if cookies %}
 <!-- Load my cookies code here -->
 {% else %}
-<div class="alert alert-danger" role="alert">
+<div class="alert alert-danger" role="alert" id="cookies-accept-alert">
   Hey, we use cookies. Do you accept them? :)
-  <form action="/set-cookie" method="post">
-    <button class="btn btn-success btn-xs">I accept</button>
-  </form>
+  <button class="btn btn-success btn-xs" id="cookies-accept-button">I accept</button>
+</div>
+
+<div class="alert alert-warning hidden" role="alert" id="cookies-warning-alert">
+  Something went wrong, please try again :(
 </div>
 {% endif %}
 
@@ -64,6 +66,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/bootstrap/js/bootstrap.js"></script>
+<script src="/assets/custom/js/cookies.js"></script>
 {%block scripts%}{% endblock scripts %}
 </body>
 </html>

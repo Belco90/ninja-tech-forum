@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import uuid
+import json
 
 import jinja2
 import webapp2
@@ -50,3 +51,10 @@ class BaseHandler(webapp2.RequestHandler):
 
         template = jinja_env.get_template(view_filename)
         return self.response.out.write(template.render(params))
+
+    def render_json(self, params=None):
+        if not params:
+            params = {}
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(params))

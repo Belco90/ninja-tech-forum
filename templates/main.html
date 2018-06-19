@@ -30,10 +30,12 @@
     </table>
 
     {% if show_subscribe_button %}
+    <p>
       <form action="/subscribe" method="post">
         <input type="hidden" name="csrf-token" value="{{ csrf_token }}">
         <button type="submit" class="btn btn-info btn-block">Subscribe</button>
       </form>
+    </p>
     {% endif %}
   </div>
 </div>
