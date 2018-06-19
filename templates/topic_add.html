@@ -6,14 +6,14 @@
 <div class="row">
   <div class="col-md-offset-3 col-md-6 col-xs-12">
 
-    <h1>Add new topic</h1>
+    <h1 id="add-topic-heading">Add new topic</h1>
 
     <form method="post">
       <input type="hidden" name="csrf-token" value="{{ csrf_token }}">
 
       <div class="form-group">
         <label>Title</label>
-        <input type="text" class="form-control" name="title" required>
+        <input type="text" class="form-control" name="title" required id="add-topic-title">
       </div>
 
       <div class="form-group">
@@ -21,8 +21,22 @@
         <textarea name="text" class="form-control" rows="6" required></textarea>
       </div>
 
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="submit" class="btn btn-success" id="add-topic-button">Submit</button>
     </form>
   </div>
 </div>
 {% endblock content %}
+
+{%block scripts%}
+
+<script>
+  $(document).ready(function() {
+    var $addTopicButton = $('#add-topic-button');
+
+    $addTopicButton.on('click', function() {
+      $addTopicButton.addClass('hidden');
+    });
+  });
+</script>
+
+{% endblock scripts %}
